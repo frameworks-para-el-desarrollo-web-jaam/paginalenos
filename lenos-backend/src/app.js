@@ -8,7 +8,7 @@ import authRoutes from "./routes/auth.routes.js";
 import pedidosRoutes from "./routes/pedidos.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
 import comentariosRoutes from "./routes/comentarios.routes.js";
-import { CORS_ORIGINS, FRONTEND_URL } from "./config.js";
+import { CORS_ORIGINS, FRONTEND_URL, UPLOADS_DIR } from "./config.js";
 
 const allowedOrigins = [...new Set(["http://localhost:5173", FRONTEND_URL, ...CORS_ORIGINS])];
 const app = express();
@@ -48,7 +48,7 @@ app.use(
 );
 app.use(helmet.hidePoweredBy());
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(UPLOADS_DIR));
 
 app.get("/", (_req, res) => {
   res.status(200).json({

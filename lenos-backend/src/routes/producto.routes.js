@@ -10,18 +10,19 @@ import {
 } from "../controllers/productos.controller.js";
 import { createProductoSchema, updateProductoSchema } from "../schemas/producto.schema.js";
 import { validateSchema } from "../middlewares/validator.middleware.js";
+import { UPLOADS_DIR } from "../config.js";
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
 // Crear carpeta si no existe
-if (!fs.existsSync('./uploads')) {
-  fs.mkdirSync('./uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
 // Configurar almacenamiento
 const storage = multer.diskStorage({
-  destination: './uploads',
+  destination: UPLOADS_DIR,
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   }

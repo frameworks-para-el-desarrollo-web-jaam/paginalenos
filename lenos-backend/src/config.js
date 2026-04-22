@@ -1,3 +1,5 @@
+import path from "path";
+
 export const PORT = Number(process.env.PORT || 3000);
 export const TOKEN_SECRET = process.env.TOKEN_SECRET || "CLAVESECRETA";
 export const MONGODB_URI =
@@ -11,3 +13,6 @@ export const CORS_ORIGINS = (process.env.CORS_ORIGINS || "")
   .map((origin) => origin.trim())
   .filter(Boolean);
 export const IS_PRODUCTION = process.env.NODE_ENV === "production";
+export const UPLOADS_DIR = process.env.VERCEL
+  ? "/tmp/uploads"
+  : path.resolve(process.cwd(), "uploads");
