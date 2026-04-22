@@ -9,23 +9,34 @@ export const getManageProductsRequest = () =>
   });
 
 export const createProductRequest = (productData) => {
-  // productData puede ser un objeto normal o FormData
   const config = {
     withCredentials: true,
-    headers: {
-      'Content-Type': productData instanceof FormData ? 'multipart/form-data' : 'application/json'
-    }
   };
+
+  if (!(productData instanceof FormData)) {
+    config.headers = {
+      "Content-Type": "application/json",
+    };
+  }
+
   return axios.post(`${API_URL}/productos`, productData, config);
 };
 
 export const updateProductRequest = (productId, productData) =>
-  axios.put(`${API_URL}/productos/${productId}`, productData, {
-    withCredentials: true,
-    headers: {
-      "Content-Type": productData instanceof FormData ? "multipart/form-data" : "application/json",
-    },
-  });
+  axios.put(
+    `${API_URL}/productos/${productId}`,
+    productData,
+    productData instanceof FormData
+      ? {
+          withCredentials: true,
+        }
+      : {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+  );
 
 export const deleteProductRequest = (productId) =>
   axios.delete(`${API_URL}/productos/${productId}`, {
