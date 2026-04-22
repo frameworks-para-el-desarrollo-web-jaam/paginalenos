@@ -1,10 +1,10 @@
 import axios from "axios";
 import { API_URL } from "../config/api";
 
-export const getCatalogProductsRequest = () => axios.get(`${API_URL}/catalogo/productos`);
+export const getCatalogProductsRequest = () => axios.get(`${API_URL}/catalogo-productos`);
 
 export const getManageProductsRequest = () =>
-  axios.get(`${API_URL}/catalogo/productos`, {
+  axios.get(`${API_URL}/productos`, {
     withCredentials: true,
   });
 

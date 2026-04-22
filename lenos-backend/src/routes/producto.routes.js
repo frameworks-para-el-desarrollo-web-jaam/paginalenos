@@ -42,6 +42,7 @@ const upload = multer({
 const router = Router();
 
 router.get("/catalogo/productos", getCatalogoProductos);
+router.get("/catalogo-productos", getCatalogoProductos);
 
 router.get("/productos", authRequire, getProductos);
 
