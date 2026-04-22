@@ -50,6 +50,29 @@ app.use(helmet.hidePoweredBy());
 
 app.use("/uploads", express.static("uploads"));
 
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: "lenos-backend",
+    message: "Backend desplegado correctamente en Vercel",
+    endpoints: [
+      "/api/health",
+      "/api/comentarios",
+      "/api/catalogo/productos",
+      "/api/login",
+      "/api/register",
+    ],
+  });
+});
+
+app.get("/api/health", (_req, res) => {
+  res.status(200).json({
+    ok: true,
+    service: "lenos-backend",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.use((err, _req, res, next) => {
   if (err?.message === "Origen no permitido por CORS") {
     return res.status(403).json({ message: err.message });
