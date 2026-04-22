@@ -13,6 +13,18 @@ const ensureDatabaseConnection = async () => {
 };
 
 export default async function handler(req, res) {
-  await ensureDatabaseConnection();
-  return app(req, res);
+  try {
+    if (req.url !== "/api/health") {
+      await ensureDatabaseConnection();
+    }
+
+    return app(req, res);
+  } catch (error) {
+    console.error("Serverless handler error:", error);
+    return res.status(500).json({
+      ok: false,
+      message: "Error al iniciar el backend",
+      error: error.message,
+    });
+  }
 }
