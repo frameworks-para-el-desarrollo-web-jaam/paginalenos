@@ -6,15 +6,27 @@ let databaseReadyPromise;
 
 const ensureDatabaseConnection = async () => {
   if (!databaseReadyPromise) {
-    databaseReadyPromise = connectDB();
+    databaseReadyPromise = connectDB().catch((error) => {
+      databaseReadyPromise = undefined;
+      throw error;
+    });
   }
 
   await databaseReadyPromise;
 };
 
+const isHealthRequest = (req) => {
+  const pathParam = req.query?.path;
+  const normalizedPath = Array.isArray(pathParam)
+    ? pathParam.join("/")
+    : pathParam || "";
+
+  return req.url?.includes("/health") || normalizedPath.includes("health");
+};
+
 export default async function handler(req, res) {
   try {
-    if (req.url !== "/api/health") {
+    if (!isHealthRequest(req)) {
       await ensureDatabaseConnection();
     }
 
