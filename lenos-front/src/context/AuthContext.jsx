@@ -27,12 +27,18 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error.response);
-      if (Array.isArray(error.response.data)) {
-        setErrors(error.response.data);
-      } else if (error.response.data.message) {
-        setErrors(error.response.data.message);
+      const responseData = error.response?.data;
+
+      if (Array.isArray(responseData)) {
+        setErrors(responseData);
+      } else if (Array.isArray(responseData?.message)) {
+        setErrors(responseData.message);
+      } else if (responseData?.message) {
+        setErrors([responseData.message]);
       } else {
-        setErrors(["Error desconocido"]);
+        setErrors([
+          "No se pudo conectar con el backend. Revisa CORS, la URL del API o el despliegue.",
+        ]);
       }
     }
   };
@@ -47,12 +53,18 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     } catch (error) {
        console.log(error.response);
-      if (Array.isArray(error.response.data)) {
-        return setErrors(error.response.data);
-      } else if (error.response.data.message) {
-        return setErrors([error.response.data.message]);
+      const responseData = error.response?.data;
+
+      if (Array.isArray(responseData)) {
+        return setErrors(responseData);
+      } else if (Array.isArray(responseData?.message)) {
+        return setErrors(responseData.message);
+      } else if (responseData?.message) {
+        return setErrors([responseData.message]);
       }  else {
-        setErrors(["Error desconocido"]);
+        setErrors([
+          "No se pudo conectar con el backend. Revisa CORS, la URL del API o el despliegue.",
+        ]);
       }
     }
   };
