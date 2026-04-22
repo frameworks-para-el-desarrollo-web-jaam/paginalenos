@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+!.env.example
+lenos-front/node_modules/
+lenos-front/dist/
+lenos-backend/node_modules/
+lenos-backend/uploads/
+
